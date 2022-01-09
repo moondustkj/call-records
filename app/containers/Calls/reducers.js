@@ -17,7 +17,7 @@ const callsReducer = (state = initialState, action) => {
     case SET_CALLS_RECORD_LIST:
       return {
         ...state,
-        callsList: action.payload.call_data,
+        callsList: action.payload,
       };
     case SET_CALLS_ID_LIST:
       return {

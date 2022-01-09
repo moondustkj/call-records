@@ -1,15 +1,9 @@
-import { Col, Pagination, Select, Slider, Table } from 'antd';
+import { Col, Pagination, Select, Slider } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import {
-  fetchCallRecords,
-  fetchAgents,
-  fetchCallsDuration,
-  filterCallsList,
-} from './actions';
-import { columns } from './callsService';
+import { fetchAgents, fetchCallsDuration, filterCallsList } from './actions';
 
 const Calls = () => {
   const dispatch = useDispatch();
@@ -25,7 +19,6 @@ const Calls = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchCallRecords());
     dispatch(fetchAgents());
     dispatch(fetchCallsDuration());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,9 +48,7 @@ const Calls = () => {
     setMinPageCount((value - 1) * numEachPage);
     setMaxPageCount(!value ? numEachPage : value * numEachPage);
   }
-  function onChangeHAndler(pagination, filters, sorter, extra) {
-    console.log('params', pagination, filters, sorter, extra);
-  }
+
   return (
     <Wrapper>
       <h3>Calls Record</h3>
@@ -107,7 +98,7 @@ const Calls = () => {
       <Col span={17}>
         {filteredCallRecords && filteredCallRecords.length ? (
           <>
-            {/* <Table>
+            <Table>
               <thead>
                 <tr>
                   <th>Call ID</th>
@@ -132,13 +123,8 @@ const Calls = () => {
                       ))
                   : null}
               </tbody>
-            </Table> */}
-            <Table
-              columns={columns}
-              dataSource={filteredCallRecords}
-              onChange={onChangeHAndler}
-            />
-            {/* <Pagination
+            </Table>
+            <Pagination
               style={{
                 display: 'block',
                 margin: '40px auto',
@@ -148,7 +134,7 @@ const Calls = () => {
               defaultPageSize={numEachPage}
               onChange={handlePagination}
               total={filteredCallRecords && filteredCallRecords.length}
-            /> */}
+            />
           </>
         ) : (
           <NoDataScreen>
@@ -191,17 +177,17 @@ const Box = styled.div`
   margin: 20px 0;
 `;
 
-// const Table = styled.table`
-//   width: 100%;
-//   margin-left: 10px;
-//   th {
-//     background-color: wheat;
-//   }
-//   th,
-//   td {
-//     padding: 10px;
-//     border: 1px solid #aaacb3;
-//     text-align: center;
-//   }
-// `;
+const Table = styled.table`
+  width: 100%;
+  margin-left: 10px;
+  th {
+    background-color: wheat;
+  }
+  th,
+  td {
+    padding: 10px;
+    border: 1px solid #aaacb3;
+    text-align: center;
+  }
+`;
 export default Calls;

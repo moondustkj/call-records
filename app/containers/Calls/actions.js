@@ -5,7 +5,7 @@ export const SET_CALLS_ID_LIST = 'SET_CALLS_ID_LIST';
 export const SET_CALLS_DURATION = 'SET_CALLS_DURATION';
 export const SET_FILTERED_CALLS_LIST = 'SET_FILTERED_CALLS_LIST';
 
-const setCallsRecordList = payload => ({
+export const setCallsRecordList = payload => ({
   type: SET_CALLS_RECORD_LIST,
   payload,
 });
@@ -31,7 +31,11 @@ export function fetchCallRecords() {
         },
       })
       .then(res => {
-        dispatch(setCallsRecordList(res.data.data));
+        const updatedList = res.data.data.call_data.map(item => ({
+          ...item,
+          isChecked: false,
+        }));
+        dispatch(setCallsRecordList(updatedList));
       })
       .catch(err => {
         dispatch(setCallsRecordList([]));
@@ -43,11 +47,9 @@ export function fetchAgents() {
     axios
       .get('https://damp-garden-93707.herokuapp.com/getlistofagents')
       .then(res => {
-        console.log(res, 'res');
         dispatch(setCallsIDList(res.data.data));
       })
       .catch(err => {
-        console.log('err', err);
         dispatch(setCallsIDList([]));
       });
 }
@@ -77,7 +79,6 @@ export function filterCallsList(filterApplied) {
         postData,
       )
       .then(res => {
-        console.log('res of filter', res.data.data);
         dispatch(setFilteredCallsList(res.data.data));
       })
       .catch(err => {
@@ -85,3 +86,29 @@ export function filterCallsList(filterApplied) {
       });
   };
 }
+
+export const updateCallLabels = (info, callback) => dispatch => {
+  const postData = {
+    operation: {
+      callList: [...info.callIds],
+      label_ops: [{ name: info.label, op: info.op }],
+    },
+  };
+  axios
+    .post('https://damp-garden-93707.herokuapp.com/applyLabels', postData, {
+      headers: {
+        user_id: '24b456',
+      },
+    })
+    .then(res => {
+      if (res.data.message === 'successfull') {
+        callback();
+        dispatch(fetchCallRecords());
+      } else {
+        callback();
+      }
+    })
+    .catch(err => {
+      console.log('err', err);
+    });
+};
