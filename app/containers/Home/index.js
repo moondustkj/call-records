@@ -12,6 +12,7 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+
 import makeSelectHome from './selectors';
 import reducer from './reducer';
 import saga from './saga';

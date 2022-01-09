@@ -8,7 +8,7 @@
   },
   "engines": {
     "npm": ">=5",
-    "node": ">=8.15.1"
+    "node": "16.13.0"
   },
   "author": "Max Stoiber",
   "license": "MIT",
@@ -66,6 +66,7 @@
   "dependencies": {
     "@babel/polyfill": "7.4.3",
     "antd": "^3.26.12",
+    "axios": "^0.24.0",
     "chalk": "^2.4.2",
     "compression": "1.7.4",
     "connected-react-router": "6.4.0",
@@ -85,10 +86,11 @@
     "react-dom": "16.8.6",
     "react-helmet": "6.0.0-beta",
     "react-intl": "2.8.0",
-    "react-redux": "7.0.2",
+    "react-redux": "7.1.0",
     "react-router-dom": "5.0.0",
     "redux": "4.0.1",
     "redux-saga": "1.0.2",
+    "redux-thunk": "^2.4.1",
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
     "styled-components": "4.2.0"

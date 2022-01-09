@@ -12,12 +12,14 @@ import { Switch, Route } from 'react-router-dom';
 
 import Home from 'containers/Home/Loadable';
 
+import Calls from '../Calls/Calls';
 
 export default function App() {
   return (
     <div>
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/calls" component={Calls} />
       </Switch>
     </div>
   );
